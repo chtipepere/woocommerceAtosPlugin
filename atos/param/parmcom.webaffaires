@@ -1,0 +1,64 @@
+###############################################################################
+#
+#	Fichier des parametres WEBAFFAIRES
+#
+#	Remarque :	Ce fichier parametre est sous la responsabilite de
+#				Votre banque
+#
+###############################################################################
+
+
+# Logo de webaffaires et de votre banque (il apparait en haut au centre)
+
+ADVERT!webaffaires.jpg!
+
+# couleur du fond d'ecran (blanc)
+
+BGCOLOR!ffffff!
+
+# Mode d'affichage des blocs de paiement
+
+BLOCK_ALIGN!center!
+
+# Ordre d'affichage des blocs de paiement
+
+BLOCK_ORDER!1,2,3,4,5,6,7,8!
+
+# Mode de securite 
+
+CONDITION!SSL!
+
+# Code devise  (978=EURO)
+
+CURRENCY!978!
+
+# flag d'edition des libelles des blocs de paiement
+
+HEADER_FLAG!yes!
+
+# Code langage de l'acheteur (fr=francais)
+
+LANGUAGE!fr!
+
+# Code pays du commercant
+
+MERCHANT_COUNTRY!fr!
+
+# Code langage du commercant
+
+MERCHANT_LANGUAGE!fr!
+
+# Liste des moyens de paiement acceptes
+
+PAYMENT_MEANS!CB,2,VISA,2,MASTERCARD,2!
+
+# Passage en une seule frame securisee au moment du paiement
+
+TARGET!_top!
+
+# Couleur du text (noir)
+
+TEXTCOLOR!000000!
+
+# END OF FILE
+

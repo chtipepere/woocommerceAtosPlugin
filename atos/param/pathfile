@@ -1,0 +1,46 @@
+#########################################################################
+#
+#	Pathfile 
+#
+#	Liste des fichiers parametres utilises par le module de paiement
+#
+#########################################################################
+#
+#
+#-------------------------------------------------------------------------
+# Activation (YES) / Desactivation (NO) du mode DEBUG
+#-------------------------------------------------------------------------
+#
+DEBUG!YES!
+#
+# ------------------------------------------------------------------------
+# Chemin vers le repertoire des logos depuis le web alias
+# Exemple pour le repertoire www.merchant.com/wp-content/plugins/woocommerceAtosPlugin/images/
+# indiquer:
+# ------------------------------------------------------------------------
+#
+D_LOGO!/wp-content/plugins/woocommerceAtosPlugin/images/!
+#
+# --------------------------------------------------------------------------
+#  Fichiers parametres lies a l'api webaffaires paiement
+# --------------------------------------------------------------------------
+#
+# fichier des parametres webaffaires
+#
+F_DEFAULT!/var/www/shop/wp-content/plugins/woocommerceAtosPlugin/atos/param/parmcom.webaffaires!
+#
+# fichier parametre commercant
+#
+F_PARAM!/var/www/shop/wp-content/plugins/woocommerceAtosPlugin/atos/param/parmcom!
+#
+# certificat du commercant
+#
+F_CERTIFICATE!/var/www/shop/wp-content/plugins/woocommerceAtosPlugin/atos/param/certif!
+#
+# type du certificat
+#
+F_CTYPE!php!
+#
+# --------------------------------------------------------------------------
+# 	end of file
+# --------------------------------------------------------------------------

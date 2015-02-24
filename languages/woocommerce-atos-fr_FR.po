@@ -1,0 +1,143 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WoocommerceAtos 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-02-18 13:46-0400\n"
+"PO-Revision-Date: 2015-02-23 23:34+0100\n"
+"Last-Translator: πR <chtipepere@gmail.com>\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"X-Poedit-SourceCharset: iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.7.4\n"
+"Language: fr_FR\n"
+
+#: index.php:19
+msgid "<strong>Error!</strong> Woocommerce is mandatory. Please install it."
+msgstr "<strong>Erreur !</strong> Woocommerce est obligatoire. Veuillez l'installer."
+
+#: index.php:27
+msgid "<strong>Error!</strong> WoocommerceAtos requires at least PHP %s! Your version is: %s. Please upgrade."
+msgstr "<strong>Erreur !</strong> WoocommerceAtos nécessite la version %s de PHP ! Votre version est %s. Merci de vous mettre à jour."
+
+#: index.php:37
+msgid "<strong>Error!</strong> WoocommerceAtos requires at least Woocommerce %s! Your version is: %s. Please upgrade."
+msgstr "<strong>Erreur !</strong> WoocommerceAtos nécessite la version %s de Woocommerce ! Votre version est %s. Merci de vous mettre à jour."
+
+#: index.php:75
+msgid "payment"
+msgstr "paiement"
+
+#: index.php:76
+msgid "Docs"
+msgstr "Documentation"
+
+#: index.php:129
+msgid "Atos Standard %s"
+msgstr "Atos Standard %s"
+
+#: index.php:131
+msgid "Atos works by sending the user to your bank to enter their payment information."
+msgstr "Atos fonctionne en envoyant le client vers votre banque pour qu'il saisisse ses informations de paiement."
+
+#: index.php:136
+msgid "Enable Atos"
+msgstr "Activer Atos"
+
+#: index.php:160
+msgid "Merchant id"
+msgstr "Identifiant marchand"
+
+#: index.php:161
+msgid "Merchant id given by your bank"
+msgstr "Identifiant de marchand donné par votre banque"
+
+#: index.php:167
+msgid "Pathfile file"
+msgstr "Fichier Pathfile"
+
+#: index.php:168
+msgid "Path to the pathfile file given by your bank"
+msgstr "Chemin vers le fichier pathfile donné par votre banque"
+
+#: index.php:174
+msgid "Request bin file path"
+msgstr "Chemin vers l'exécutable request"
+
+#: index.php:175
+msgid "Path to the request bin file given by your bank"
+msgstr "Chemin vers le fichier request donné par votre banque"
+
+#: index.php:181
+msgid "Response bin file path"
+msgstr "Chemin vers l'exécutable response"
+
+#: index.php:182
+msgid "Path to the response bin file given by your bank"
+msgstr "Chemin vers le fichier response donné par votre banque"
+
+#: index.php:188
+msgid "Cancel return url"
+msgstr "Url de retour après annulation"
+
+#: index.php:189
+msgid "Return url in case of canceled transaction"
+msgstr "Url de retour en cas d'annulation"
+
+#: index.php:195
+msgid "Normal return url"
+msgstr "Url de retour normale"
+
+#: index.php:196
+msgid "Return url when a user click on the << Back to the shop >> button"
+msgstr "Url de retour en cas de clic sur le bouton << Retour à la boutique >>"
+
+#: index.php:202
+msgid "Automatic response url"
+msgstr "Url de la réponse automatique"
+
+#: index.php:203
+msgid "URL called in case of success payment"
+msgstr "Url appelée en cas de succès"
+
+#: index.php:210
+msgid "Right image on Atos page"
+msgstr "Image apparaissant sur la droite de la page de votre banque"
+
+#: index.php:217
+msgid "Center image on Atos page"
+msgstr "Image apparaissant au centre de la page de votre banque"
+
+#: index.php:241
+msgid "Thank you for your order, please click the button below to pay."
+msgstr "Merci pour votre commande, merci de cliquer sur l'un des boutons ci-dessous."
+
+#: index.php:316
+msgid "Error calling the atos api: exec request not found"
+msgstr "Erreur lors de l'appel à l'API Atos : le fichier request n'a pas été trouvé"
+
+#: index.php:321
+msgid "Atos API error:"
+msgstr "Erreur de l'API Atos :"
+
+#: index.php:330
+msgid "You see this because you are in demo store mode."
+msgstr "Vous voyez ce message car vous en êtes en mode boutique de démo."
+
+#: index.php:332
+msgid "End of debug mode"
+msgstr "Fin du mode debug"
+
+#: automatic_response.php:60, 64
+msgid "Thank you for shopping with us. However, the transaction has been declined."
+msgstr "Merci de votre confiance. Cependant la transaction a été refusée par la banque."
+
+#: automatic_response.php:71
+msgid "Payment accepted by the bank"
+msgstr "Paiement accepté par la banque"
+
+#: automatic_response.php:82
+msgid "Precondition failed."
+msgstr "Votre requête n'a pas abouti."

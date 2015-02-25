@@ -42,6 +42,12 @@ Create a page that contains shortcode above and fill the automatic_response_url 
 
 See https://github.com/chtipepere/woocommerceAtosPlugin
 
+== Screenshots ==
+
+1. Backoffice options
+2. Gateway choices
+3. Pick your card and pay
+
 == Changelog ==
 
 = 1.0 =

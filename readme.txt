@@ -3,7 +3,7 @@ Contributors: chtipepere
 Tags: Woocommerce, Payment Gateway, Atos, Cartes Bancaires
 Requires at least: 4.0.1
 Tested up to: 4.0.1
-Stable tag: 1.0
+Stable tag: 1.1
 License: Apache License 2.0
 License URI: http://www.apache.org/licenses/LICENSE-2.0
 
@@ -50,13 +50,18 @@ See https://github.com/chtipepere/woocommerceAtosPlugin
 
 == Changelog ==
 
+= 1.1 =
+* Fix variable name
+* Compatible with php 5.3
+* Increase compatibility
+
 = 1.0 =
 * Initial version
 
 == Woocommerce Compatibility ==
 
 Requires at least: 2.3.5
-Tested up to: 2.3.5
+Tested up to: 2.3.7
 
 == Credits ==
 

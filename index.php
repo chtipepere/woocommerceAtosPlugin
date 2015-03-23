@@ -4,7 +4,7 @@ Plugin Name: WoocommerceAtos
 Text Domain: woocommerce-atos
 Plugin URI: https://github.com/chtipepere/woocommerceAtosPlugin
 Description: Extends Woocommerce with Atos SIPS gateway (French bank).
-Version: 1.0
+Version: 1.1
 Author: πR
 **/
 
@@ -23,7 +23,7 @@ if (! class_exists( 'WooCommerce' )) {
 	add_action('admin_notices', 'woocommerce_required');
 }
 
-define('WOOCOMMERCEATOS_PHP_VERSION', '5.4');
+define('WOOCOMMERCEATOS_PHP_VERSION', '5.3');
 define('WOOCOMMERCE_MINIMUM_VERSION', '2.3.5');
 
 if(!version_compare(PHP_VERSION, WOOCOMMERCEATOS_PHP_VERSION, '>=')) {
@@ -73,10 +73,10 @@ function woocommerce_atos_init() {
 	add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), 'add_action_links' );
 
 	function add_action_links ( $links ) {
-		$mylinks = [
-			'<a href="' . admin_url( 'admin.php?page=wc-settings&tab=checkout&section=woocommerce_atos' ) . '">'.__('Settings', 'woocommerce') . '</a>',
+		$mylinks = array(
+			'<a href="' . admin_url( 'admin.php?page=wc-settings&tab=checkout&section=woocommerce_atos' ) . '">'.__('Settings', 'woocommerce-atos') . '</a>',
 			'<a href="https://github.com/chtipepere/woocommerceAtosPlugin/blob/master/README.md">'.__('Docs', 'woocommerce-atos') . '</a>'
-		];
+        );
 		return array_merge( $links, $mylinks );
 	}
 
@@ -85,7 +85,7 @@ function woocommerce_atos_init() {
 	 */
 	class Woocommerce_atos extends WC_Payment_Gateway {
 
-		public $msg = [];
+		public $msg = array();
 		public $settings;
 
 		public function __construct() {
@@ -98,102 +98,103 @@ function woocommerce_atos_init() {
 			$this->method_title             = 'Atos';
 			$this->icon                     = WP_PLUGIN_URL . '/' . plugin_basename( dirname( __FILE__ ) ) . '/images/logo.gif';
 			$this->has_fields               = false;
-			$this->enabled                  = $this->settings['woocommerce_atos_is_enabled'];
-			$this->title                    = $this->settings['woocommerce_atos_title'];
-			$this->description              = $this->settings['woocommerce_atos_description'];
-			$this->merchant_id              = $this->settings['woocommerce_atos_merchant_id'];
-			$this->merchant_name            = $this->settings['woocommerce_atos_merchant_name'];
-			$this->pathfile                 = $this->settings['woocommerce_atos_pathfile'];
-			$this->path_bin_request         = $this->settings['woocommerce_atos_path_bin_request'];
-			$this->path_bin_response        = $this->settings['woocommerce_atos_path_bin_response'];
-			$this->cancel_return_url        = $this->settings['woocommerce_atos_cancel_return_url'];
-			$this->automatic_response_url   = $this->settings['woocommerce_atos_automatic_response_url'];
-			$this->normal_return_url        = $this->settings['woocommerce_atos_normal_return_url'];
-			$this->logo_id2                 = $this->settings['woocommerce_atos_logo_id2'];
-			$this->advert                   = $this->settings['woocommerce_atos_advert'];
+			$this->enabled                  = $this->get_option('woocommerce_atos_is_enabled');
+			$this->title                    = $this->get_option('woocommerce_atos_title');
+			$this->description              = $this->get_option('woocommerce_atos_description');
+			$this->merchant_id              = $this->get_option('woocommerce_atos_merchant_id');
+			$this->merchant_name            = $this->get_option('woocommerce_atos_merchant_name');
+			$this->pathfile                 = $this->get_option('woocommerce_atos_pathfile');
+			$this->path_bin_request         = $this->get_option('woocommerce_atos_path_bin_request');
+			$this->path_bin_response        = $this->get_option('woocommerce_atos_path_bin_response');
+			$this->cancel_return_url        = $this->get_option('woocommerce_atos_cancel_return_url');
+			$this->automatic_response_url   = $this->get_option('woocommerce_atos_automatic_response_url');
+			$this->normal_return_url        = $this->get_option('woocommerce_atos_normal_return_url');
+			$this->logo_id2                 = $this->get_option('woocommerce_atos_logo_id2');
+			$this->advert                   = $this->get_option('woocommerce_atos_advert');
 
 			$this->msg['message']           = '';
 			$this->msg['class']             = '';
 
-			add_action('receipt_woocommerce_atos', [$this, 'receipt_page']);
+            add_action('woocommerce_update_options_payment_gateways_' . $this->id, array($this, 'process_admin_options'));
+            add_action('woocommerce_receipt_' . $this->id, array($this, 'receipt_page'));
 		}
 
 		function init_form_fields(){
 
-			$this -> form_fields = [
-				'woocommerce_atos_is_enabled' => [
+			$this -> form_fields = array(
+				'woocommerce_atos_is_enabled' => array(
 					'title'     => __('Enable Atos', 'woocommerce-atos'),
 					'type'      => 'checkbox',
 					'label'     => __('Enable Atos SIPS Module.', 'woocommerce-atos'),
 					'default'   => 'no'
-				],
-				'woocommerce_atos_title' => [
+                ),
+				'woocommerce_atos_title' => array(
 					'title'         => sprintf(__('Atos Standard %s', 'woocommerce-atos'), '<img style="vertical-align:middle;margin-top:-4px;margin-left:10px;" src="' . WP_PLUGIN_URL . '/' . plugin_basename( dirname( __FILE__ ) ) . '/images/logo.gif" alt="Atos">'),
 					'type'          => 'text',
 					'description'   => __('This controls the title which the user sees during checkout.', 'woocommerce-atos'),
 					'default'       => __('Credit card', 'woocommerce-atos')
-				],
-				'woocommerce_atos_description' => [
-					'title'         => __('Description:', 'atos'),
+                ),
+				'woocommerce_atos_description' => array(
+					'title'         => __('Description:', 'woocommerce-atos'),
 					'type'          => 'textarea',
 					'description'   => __('Atos works by sending the user to your bank to enter their payment information.', 'woocommerce-atos'),
 					'default'       => __( 'Paiement sécurisé par Carte Bancaire (Atos)', 'woocommerce-atos' )
-				],
-				'woocommerce_atos_merchantid' => [
+                ),
+				'woocommerce_atos_merchant_id' => array(
 					'title'         => __('Merchant id', 'woocommerce-atos'),
 					'type'          => 'text',
 					'description'   => __('Merchant id given by your bank', 'woocommerce-atos'),
 					'default'       => '014022286611112'
-				],
-				'woocommerce_atos_pathfile' => [
+                ),
+				'woocommerce_atos_pathfile' => array(
 					'title'         => __('Pathfile file', 'woocommerce-atos'),
 					'type'          => 'text',
 					'description'   =>  __( 'Path to the pathfile file given by your bank', 'woocommerce-atos' ),
 					'default'       => '/var/www/site/param/pathfile'
-				],
-				'woocommerce_atos_path_bin_request' => [
+                ),
+				'woocommerce_atos_path_bin_request' => array(
 					'title'         => __('Request bin file path', 'woocommerce-atos'),
 					'type'          => 'text',
 					'description'   =>  __( 'Path to the request bin file given by your bank', 'woocommerce-atos' ),
 					'default'       => '/var/www/site/bin/static/request'
-				],
-				'woocommerce_atos_path_bin_response' => [
+                ),
+				'woocommerce_atos_path_bin_response' => array(
 					'title'         => __('Response bin file path', 'woocommerce-atos'),
 					'type'          => 'text',
 					'description'   =>  __( 'Path to the response bin file given by your bank', 'woocommerce-atos' ),
 					'default'       => '/var/www/site/bin/static/response'
-				],
-				'woocommerce_atos_cancel_return_url' => [
+                ),
+				'woocommerce_atos_cancel_return_url' => array(
 					'title'         => __('Cancel return url', 'woocommerce-atos'),
 					'type'          => 'text',
 					'description'   =>  __( 'Return url in case of canceled transaction', 'woocommerce-atos' ),
 					'default'       => site_url('/cancel')
-				],
-				'woocommerce_atos_normal_return_url' => [
+                ),
+				'woocommerce_atos_normal_return_url' => array(
 					'title'         => __('Normal return url', 'woocommerce-atos'),
 					'type'          => 'text',
 					'description'   => __( 'Return url when a user click on the << Back to the shop >> button', 'woocommerce-atos' ),
 					'default'       => site_url('/thankyou')
-				],
-				'woocommerce_atos_logo_id2' => [
+                ),
+				'woocommerce_atos_logo_id2' => array(
 					'title'         => __('Logo id2', 'woocommerce-atos'),
 					'type'          => 'text',
 					'description'   =>  __( 'Right image on Atos page', 'woocommerce-atos' ),
 					'default'       => 'logo_id2.gif'
-				],
-				'woocommerce_atos_advert' => [
+                ),
+				'woocommerce_atos_advert' => array(
 					'title'         => __('Advert', 'woocommerce-atos'),
 					'type'          => 'text',
 					'description'   =>  __( 'Center image on Atos page', 'woocommerce-atos' ),
 					'default'       => 'advert.gif'
-				],
-				'woocommerce_atos_automatic_response_url' => [
+                ),
+				'woocommerce_atos_automatic_response_url' => array(
 					'title'         => __('Automatic response url', 'woocommerce-atos'),
 					'type'          => 'text',
 					'description'   =>  __( 'URL called in case of success payment', 'woocommerce-atos' ),
 					'default'       => site_url( '?page=12' )
-				]
-			];
+                )
+            );
 		}
 
 		/**
@@ -201,15 +202,11 @@ function woocommerce_atos_init() {
 		 */
 		public function process_payment($order_id)
 		{
-			$order = &new WC_order($order_id);
-			return [
+			$order = new WC_order($order_id);
+			return array(
 				'result'    => 'success',
-				'redirect'  => add_query_arg(
-					'order',
-					$order->id,
-					add_query_arg('key', $order->order_key, get_permalink(get_option('woocommerce_pay_page_id')))
-				)
-			];
+				'redirect'  => $order->get_checkout_payment_url(true)
+            );
 		}
 
 		/**
@@ -221,9 +218,8 @@ function woocommerce_atos_init() {
 			}
 		}
 
-		function receipt_page( $order_id ) {
-			echo '<p>' . __( 'Thank you for your order, please click the button below to pay.',
-					'woocommerce-atos' ) . '</p>';
+		public function receipt_page( $order_id ) {
+			echo '<p>' . __( 'Thank you for your order, please click the button below to pay.', 'woocommerce-atos' ) . '</p>';
 			echo $this->generate_atos_form( $order_id );
 		}
 
@@ -246,7 +242,7 @@ function woocommerce_atos_init() {
 		 */
 		public function generate_atos_form( $order_id )
 		{
-			$order = &new WC_order( $order_id );
+			$order = new WC_order( $order_id );
 			// La variable order contient toutes les infos du panier et du client
 
 			$pathfile = $this->pathfile;

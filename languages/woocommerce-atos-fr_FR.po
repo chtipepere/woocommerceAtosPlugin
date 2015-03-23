@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: WoocommerceAtos 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-02-18 13:46-0400\n"
-"PO-Revision-Date: 2015-02-23 23:34+0100\n"
+"PO-Revision-Date: 2015-03-23 21:56+0100\n"
 "Last-Translator: πR <chtipepere@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -18,33 +18,37 @@ msgstr ""
 msgid "<strong>Error!</strong> Woocommerce is mandatory. Please install it."
 msgstr "<strong>Erreur !</strong> Woocommerce est obligatoire. Veuillez l'installer."
 
-#: index.php:27
+#: index.php:32
 msgid "<strong>Error!</strong> WoocommerceAtos requires at least PHP %s! Your version is: %s. Please upgrade."
 msgstr "<strong>Erreur !</strong> WoocommerceAtos nécessite la version %s de PHP ! Votre version est %s. Merci de vous mettre à jour."
 
-#: index.php:37
+#: index.php:42
 msgid "<strong>Error!</strong> WoocommerceAtos requires at least Woocommerce %s! Your version is: %s. Please upgrade."
 msgstr "<strong>Erreur !</strong> WoocommerceAtos nécessite la version %s de Woocommerce ! Votre version est %s. Merci de vous mettre à jour."
 
-#: index.php:75
-msgid "payment"
-msgstr "paiement"
+#: index.php:77
+msgid "Settings"
+msgstr "Réglages"
 
-#: index.php:76
+#: index.php:78
 msgid "Docs"
 msgstr "Documentation"
 
-#: index.php:129
+#: index.php:126
+msgid "Enable Atos"
+msgstr "Activer Atos"
+
+#: index.php:128
+msgid "Enable Atos SIPS Module."
+msgstr "Activer Atos SIPS Module."
+
+#: index.php:132
 msgid "Atos Standard %s"
 msgstr "Atos Standard %s"
 
-#: index.php:131
+#: index.php:140
 msgid "Atos works by sending the user to your bank to enter their payment information."
 msgstr "Atos fonctionne en envoyant le client vers votre banque pour qu'il saisisse ses informations de paiement."
-
-#: index.php:136
-msgid "Enable Atos"
-msgstr "Activer Atos"
 
 #: index.php:160
 msgid "Merchant id"

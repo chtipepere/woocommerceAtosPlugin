@@ -53,23 +53,26 @@ function woocommerce_atos_automatic_response( $atts ) {
 			'capturemode'        => $results[31],
 			'data'               => $results[32]
 		);
-		$order    = &new WC_order( $response['orderid'] );
-		if ( ( $response['code'] == '' ) && ( $response['error'] == '' ) ) {
+		$order    = new WC_order( $response['orderid'] );
+		if ( ( $response['responsecode'] == '' ) && ( $response['error'] == '' ) ) {
 
 			$atos->msg['class']   = 'error';
 			$atos->msg['message'] = __('Thank you for shopping with us. However, the transaction has been declined.', 'woocommerce-atos');
 
-		} elseif ( $response['code'] != 0 ) {
+		} elseif ( $response['responsecode'] != 0 ) {
 			$atos->msg['class']   = 'error';
 			$atos->msg['message'] = __('Thank you for shopping with us. However, the transaction has been declined.', 'woocommerce-atos');
 
 		} else {
 
-			if ( $response['code'] == 00 ) {
+			if ( $response['responsecode'] == 00 ) {
 
 				$transauthorised = true;
+                $order->update_status('completed');
+                $order->payment_complete($response['transactionid']);
 				$order->add_order_note( __('Payment accepted by the bank', 'woocommerce-atos') );
-				$order->payment_complete();
+
+                WC()->cart->empty_cart();
 			}
 
 		}

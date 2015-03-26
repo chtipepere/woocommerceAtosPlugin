@@ -4,7 +4,7 @@ Plugin Name: WoocommerceAtos
 Text Domain: woocommerce-atos
 Plugin URI: https://github.com/chtipepere/woocommerceAtosPlugin
 Description: Extends Woocommerce with Atos SIPS gateway (French bank).
-Version: 1.1
+Version: 1.1.1
 Author: πR
 **/
 
@@ -90,30 +90,29 @@ function woocommerce_atos_init() {
 
 		public function __construct() {
 
-			$this->init_form_fields();
-			$this->init_settings();
+            // Go wild in here 
+            $this->id                       = 'woocommerce_atos';
+            $this->icon                     = WP_PLUGIN_URL . '/' . plugin_basename( dirname( __FILE__ ) ) . '/images/logo.gif';
+            $this->has_fields               = false;
+            $this->method_title             = 'Atos';
+            $this->method_description       = __('France based ATOS Worldline SIPS is the leading secure payment solution in Europe. Atos works by sending the user to your bank to enter their payment information.', 'woocommerce-atos');
 
-			// Go wild in here
-			$this->id                       = 'woocommerce_atos';
-			$this->method_title             = 'Atos';
-			$this->icon                     = WP_PLUGIN_URL . '/' . plugin_basename( dirname( __FILE__ ) ) . '/images/logo.gif';
-			$this->has_fields               = false;
-			$this->enabled                  = $this->get_option('woocommerce_atos_is_enabled');
-			$this->title                    = $this->get_option('woocommerce_atos_title');
-			$this->description              = $this->get_option('woocommerce_atos_description');
-			$this->merchant_id              = $this->get_option('woocommerce_atos_merchant_id');
-			$this->merchant_name            = $this->get_option('woocommerce_atos_merchant_name');
-			$this->pathfile                 = $this->get_option('woocommerce_atos_pathfile');
-			$this->path_bin_request         = $this->get_option('woocommerce_atos_path_bin_request');
-			$this->path_bin_response        = $this->get_option('woocommerce_atos_path_bin_response');
-			$this->cancel_return_url        = $this->get_option('woocommerce_atos_cancel_return_url');
-			$this->automatic_response_url   = $this->get_option('woocommerce_atos_automatic_response_url');
-			$this->normal_return_url        = $this->get_option('woocommerce_atos_normal_return_url');
-			$this->logo_id2                 = $this->get_option('woocommerce_atos_logo_id2');
-			$this->advert                   = $this->get_option('woocommerce_atos_advert');
+            $this->init_form_fields();
+            $this->init_settings();
 
-			$this->msg['message']           = '';
-			$this->msg['class']             = '';
+            $this->description              = $this->get_option('woocommerce_atos_description');
+            $this->enabled                  = $this->get_option('woocommerce_atos_is_enabled');
+            $this->title                    = $this->get_option('woocommerce_atos_title');
+            $this->merchant_id              = $this->get_option('woocommerce_atos_merchant_id');
+            $this->merchant_name            = $this->get_option('woocommerce_atos_merchant_name');
+            $this->pathfile                 = $this->get_option('woocommerce_atos_pathfile');
+            $this->path_bin_request         = $this->get_option('woocommerce_atos_path_bin_request');
+            $this->path_bin_response        = $this->get_option('woocommerce_atos_path_bin_response');
+            $this->cancel_return_url        = $this->get_option('woocommerce_atos_cancel_return_url');
+            $this->automatic_response_url   = $this->get_option('woocommerce_atos_automatic_response_url');
+            $this->normal_return_url        = $this->get_option('woocommerce_atos_normal_return_url');
+            $this->logo_id2                 = $this->get_option('woocommerce_atos_logo_id2');
+            $this->advert                   = $this->get_option('woocommerce_atos_advert');
 
             add_action('woocommerce_update_options_payment_gateways_' . $this->id, array($this, 'process_admin_options'));
             add_action('woocommerce_receipt_' . $this->id, array($this, 'receipt_page'));

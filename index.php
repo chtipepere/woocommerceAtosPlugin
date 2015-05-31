@@ -4,7 +4,7 @@ Plugin Name: WoocommerceAtos
 Text Domain: woocommerce-atos
 Plugin URI: https://github.com/chtipepere/woocommerceAtosPlugin
 Description: Extends Woocommerce with Atos SIPS gateway (French bank).
-Version: 1.1.1
+Version: 1.2.0
 Author: πR
 **/
 
@@ -15,9 +15,10 @@ if (false === defined('ABSPATH')) {
 
 if (! class_exists( 'WooCommerce' )) {
 	function woocommerce_required(){
-		echo '<div class="error"><p>'.
-		     __('<strong>Error!</strong> Woocommerce is mandatory. Please install it.', 'woocommerce-atos').
-		     '</p></div>';
+        echo sprintf(
+            '<div class="error"><p>%s</p></div>',
+            __('<strong>Error!</strong> Woocommerce is mandatory. Please install it.', 'woocommerce-atos')
+        );
 		return;
 	}
 	add_action('admin_notices', 'woocommerce_required');
@@ -28,9 +29,14 @@ define('WOOCOMMERCE_MINIMUM_VERSION', '2.3.5');
 
 if(!version_compare(PHP_VERSION, WOOCOMMERCEATOS_PHP_VERSION, '>=')) {
 	function woocommerce_required_version(){
-		echo '<div class="error"><p>'.
-		     sprintf(__('<strong>Error!</strong> WoocommerceAtos requires at least PHP %s! Your version is: %s. Please upgrade.', 'woocommerce-atos'), WOOCOMMERCEATOS_PHP_VERSION, PHP_VERSION).
-		     '</p></div>';
+        echo sprintf(
+            '<div class="error"><p>%s</p></div>',
+            sprintf(
+                __('<strong>Error!</strong> WoocommerceAtos requires at least PHP %s! Your version is: %s. Please upgrade.', 'woocommerce-atos'),
+                WOOCOMMERCEATOS_PHP_VERSION,
+                PHP_VERSION
+            )
+        );
 		return;
 	}
 	add_action('admin_notices', 'woocommerce_required_version');
@@ -38,9 +44,13 @@ if(!version_compare(PHP_VERSION, WOOCOMMERCEATOS_PHP_VERSION, '>=')) {
 
 if(!version_compare(Woocommerce::instance()->version, WOOCOMMERCE_MINIMUM_VERSION, '>=')) {
 	function woocommerce_minimum_version(){
-		echo '<div class="error"><p>'.
-		     sprintf(__('<strong>Error!</strong> WoocommerceAtos requires at least Woocommerce %s! Your version is: %s. Please upgrade.', 'woocommerce-atos'), WOOCOMMERCE_MINIMUM_VERSION, Woocommerce::instance()->version).
-		     '</p></div>';
+        echo sprintf(
+            '<div class="error"><p>%s</p></div>',
+            sprintf(__('<strong>Error!</strong> WoocommerceAtos requires at least Woocommerce %s! Your version is: %s. Please upgrade.', 'woocommerce-atos'),
+                WOOCOMMERCE_MINIMUM_VERSION,
+                Woocommerce::instance()->version
+            )
+        );
 		return;
 	}
 	add_action('admin_notices', 'woocommerce_minimum_version');
@@ -58,7 +68,7 @@ function woocommerce_atos_init() {
 
 	/** Translations */
 	$plugin_dir = basename(dirname(__FILE__));
-	load_plugin_textdomain('woocommerce-atos', false, $plugin_dir . '/languages/');
+	load_plugin_textdomain('woocommerce-atos', false, sprintf('%s/languages/', $plugin_dir));
 
 	/**
 	 * Add the gateway to Woocommerce
@@ -70,12 +80,17 @@ function woocommerce_atos_init() {
 
 	include_once( 'automatic_response.php' );
 
-	add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), 'add_action_links' );
+	add_filter( sprintf('plugin_action_links_%s', plugin_basename(__FILE__)), 'add_action_links' );
 
+    /**
+     * @param $links
+     *
+     * @return array
+     */
 	function add_action_links ( $links ) {
 		$mylinks = array(
-			'<a href="' . admin_url( 'admin.php?page=wc-settings&tab=checkout&section=woocommerce_atos' ) . '">'.__('Settings', 'woocommerce-atos') . '</a>',
-			'<a href="https://github.com/chtipepere/woocommerceAtosPlugin/blob/master/README.md">'.__('Docs', 'woocommerce-atos') . '</a>'
+            sprintf('<a href="%s">%s</a>', admin_url( 'admin.php?page=wc-settings&tab=checkout&section=woocommerce_atos', __('Settings', 'woocommerce-atos'))),
+            sprintf('<a href="https://github.com/chtipepere/woocommerceAtosPlugin/blob/master/README.md">%s</a>', __('Docs', 'woocommerce-atos'))
         );
 		return array_merge( $links, $mylinks );
 	}
@@ -87,12 +102,14 @@ function woocommerce_atos_init() {
 
 		public $msg = array();
 		public $settings;
+        protected $params;
+        protected $form_fields;
 
-		public function __construct() {
+        public function __construct() {
 
             // Go wild in here 
             $this->id                       = 'woocommerce_atos';
-            $this->icon                     = WP_PLUGIN_URL . '/' . plugin_basename( dirname( __FILE__ ) ) . '/images/logo.gif';
+            $this->icon                     = sprintf('%s/%s/images/logo.gif', WP_PLUGIN_URL, plugin_basename( dirname( __FILE__ ) ));
             $this->has_fields               = false;
             $this->method_title             = 'Atos';
             $this->method_description       = __('France based ATOS Worldline SIPS is the leading secure payment solution in Europe. Atos works by sending the user to your bank to enter their payment information.', 'woocommerce-atos');
@@ -196,9 +213,13 @@ function woocommerce_atos_init() {
             );
 		}
 
-		/**
-		 * Process the payment and return the result
-		 */
+        /**
+         * Process the payment and return the result
+         *
+         * @param $order_id
+         *
+         * @return array
+         */
 		public function process_payment($order_id)
 		{
 			$order = new WC_order($order_id);
@@ -217,19 +238,30 @@ function woocommerce_atos_init() {
 			}
 		}
 
-		public function receipt_page( $order_id ) {
-			echo '<p>' . __( 'Thank you for your order, please click the button below to pay.', 'woocommerce-atos' ) . '</p>';
+        /**
+         * @param $order_id
+         */
+		public function receipt_page( $order_id )
+        {
+            echo sprintf('<p>%s</p>', __( 'Thank you for your order, please click the button below to pay.', 'woocommerce-atos' ));
 			echo $this->generate_atos_form( $order_id );
 		}
 
-		public function thankyou_page() {
+		public function thankyou_page()
+        {
 			if ( $this->description ) {
 				echo wpautop( wptexturize( $this->mercitxt ) );
 			}
 		}
 
-		public function showMessage( $content ) {
-			return '<div class="box ' . $this->msg['class'] . '-box">' . $this->msg['message'] . '</div>' . $content;
+        /**
+         * @param $content
+         *
+         * @return string
+         */
+		public function showMessage( $content )
+        {
+            return sprintf('<div class="box %s-box">%s</div>%s', $this->msg['class'], $this->msg['message'], $content);
 		}
 
 		/**
@@ -241,68 +273,78 @@ function woocommerce_atos_init() {
 		 */
 		public function generate_atos_form( $order_id )
 		{
+            // Contains every informations about the basket and the customer
 			$order = new WC_order( $order_id );
-			// La variable order contient toutes les infos du panier et du client
 
-			$pathfile = $this->pathfile;
+			$pathfile           = $this->pathfile;
+			$path_bin_request   = $this->path_bin_request;
 
-			$path_bin_request = $this->path_bin_request;
-			$parm             = 'merchant_id=' . $this->merchant_id;
+            $this->addParam('merchant_id', $this->merchant_id);
+            $this->addParam('merchant_country', 'fr');
+            $this->addParam('amount', $this->calcAmount($order->order_total));
+            $this->addParam('currency_code', 978);
+            $this->addParam('pathfile', $pathfile);
+            $this->addParam('normal_return_url', $this->normal_return_url);
+            $this->addParam('cancel_return_url', $this->cancel_return_url);
+            $this->addParam('automatic_response_url', $this->automatic_response_url);
+            $this->addParam('language', 'fr');
+            $this->addParam('payment_means', 'CB,2,VISA,2,MASTERCARD,2');
+            $this->addParam('header_flag', 'no');
+            $this->addParam('order_id', $order_id);
+            $this->addParam('logo_id2', $this->logo_id2);
+            $this->addParam('advert', $this->advert);
 
-			$parm   = "$parm merchant_country=fr";
-			$amount = ( $order->order_total ) * 100;
-
-			$amount = str_pad( $amount, 3, '0', STR_PAD_LEFT );
-
-			$parm = "$parm amount=" . $amount;
-
-			$parm = "$parm currency_code=978";
-
-			$parm = "$parm pathfile=" . $pathfile;
-
-			$parm = "$parm normal_return_url=" . $this->normal_return_url;
-
-			$parm = "$parm cancel_return_url=" . $this->cancel_return_url;
-
-			$parm = "$parm automatic_response_url=" . $this->automatic_response_url;
-
-			$parm = "$parm language=fr";
-
-			$parm = "$parm payment_means=CB,2,VISA,2,MASTERCARD,2";
-
-			$parm = "$parm header_flag=no";
-
-			$parm = "$parm order_id=$order_id";
-
-			$parm = "$parm logo_id2=" . $this->logo_id2;
-
-			$parm = "$parm advert=" . $this->advert;
-
-			$parm = escapeshellcmd($parm);
+			$parm = escapeshellcmd($this->getParams());
 			$result = exec( "$path_bin_request $parm" );
+			$codeAndError = explode( '!', "$result" );
 
-			$tableau = explode( "!", "$result" );
-
-			$code = $tableau[1];
-
-			$error = $tableau[2];
+			$code = $codeAndError[1];
+			$error = $codeAndError[2];
 
 			if ( ( $code == '' ) && ( $error == '' ) ) {
 
-				$message = '<p>' . __( 'Error calling the atos api: exec request not found',
-						'woocommerce-atos' ) . "  $path_bin_request</p>";
+                return sprintf('<p>%s %s</p>', __( 'Error calling the atos api: exec request not found',
+                    'woocommerce-atos' ), $path_bin_request);
 
 			} elseif ( $code != 0 ) {
 
-				$message = '<p>' . __( 'Atos API error:', 'woocommerce-atos' ) . " $error</p>";
+                return sprintf('<p>%s %s</p>', __( 'Atos API error:', 'woocommerce-atos' ), $error);
 
 			} else {
 
-				// Affiche le formulaire avec le choix des cartes bancaires :
-				$message = $tableau[3];
+                // Display form with bank cards list
+				return $codeAndError[3];
 			}
-
-			return $message;
 		}
-	}
+
+        /**
+         * @param $key
+         * @param $value
+         */
+        protected function addParam($key, $value)
+        {
+            $param = sprintf('%s=%s', $key, $value);
+            $this->params .= sprintf(' %s', $param);
+        }
+
+        /**
+         * @return mixed
+         */
+        protected function getParams()
+        {
+            return $this->params;
+        }
+
+        /**
+         * @param $total
+         *
+         * @return string
+         */
+        private function calcAmount($total)
+        {
+            $amount = ( $total ) * 100;
+            return str_pad( $amount, 3, '0', STR_PAD_LEFT );
+        }
+
+    }
 }

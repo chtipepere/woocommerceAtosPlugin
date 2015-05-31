@@ -29,6 +29,8 @@ Create a page that contains shortcode above and fill the automatic_response_url 
 ```
 [woocommerce_atos_automatic_response]
 ```
+/!\ Make sure the page is public (ie no htaccess or anything that could avoid the automatic call from the bank service).
+
 ----------
 
 Test mode

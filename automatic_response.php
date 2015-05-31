@@ -68,7 +68,7 @@ function woocommerce_atos_automatic_response( $atts ) {
 			if ( $response['responsecode'] == 00 ) {
 
 				$transauthorised = true;
-                $order->update_status('completed');
+                $order->update_status('processing');
                 $order->payment_complete($response['transactionid']);
 				$order->add_order_note( __('Payment accepted by the bank', 'woocommerce-atos') );
 

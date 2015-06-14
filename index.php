@@ -149,6 +149,7 @@ function woocommerce_atos_init()
             $this->cancel_return_url      = $this->get_option( 'woocommerce_atos_cancel_return_url' );
             $this->automatic_response_url = $this->get_option( 'woocommerce_atos_automatic_response_url' );
             $this->normal_return_url      = $this->get_option( 'woocommerce_atos_normal_return_url' );
+            $this->logo_id1               = $this->get_option( 'woocommerce_atos_logo_id1' );
             $this->logo_id2               = $this->get_option( 'woocommerce_atos_logo_id2' );
             $this->advert                 = $this->get_option( 'woocommerce_atos_advert' );
 
@@ -218,6 +219,12 @@ function woocommerce_atos_init()
                     'description' => __( 'Return url when a user click on the << Back to the shop >> button',
                         'woocommerce-atos' ),
                     'default'     => site_url( '/thankyou' )
+                ),
+                'woocommerce_atos_logo_id1'               => array(
+                    'title'       => __( 'Logo id1', 'woocommerce-atos' ),
+                    'type'        => 'text',
+                    'description' => __( 'Left image on Atos page', 'woocommerce-atos' ),
+                    'default'     => 'logo_id1.gif'
                 ),
                 'woocommerce_atos_logo_id2'               => array(
                     'title'       => __( 'Logo id2', 'woocommerce-atos' ),
@@ -328,6 +335,7 @@ function woocommerce_atos_init()
             $this->addParam( 'payment_means', 'CB,2,VISA,2,MASTERCARD,2' );
             $this->addParam( 'header_flag', 'no' );
             $this->addParam( 'order_id', $order_id );
+            $this->addParam( 'logo_id1', $this->logo_id1 );
             $this->addParam( 'logo_id2', $this->logo_id2 );
             $this->addParam( 'advert', $this->advert );
 

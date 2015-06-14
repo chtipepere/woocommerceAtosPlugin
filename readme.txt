@@ -50,6 +50,9 @@ See https://github.com/chtipepere/woocommerceAtosPlugin
 
 == Changelog ==
 
+= 1.2.2 =
+* Add logo_id1 (https://github.com/chtipepere/woocommerceAtosPlugin/issues/4)
+
 = 1.2.1 =
 * Fix fatal error (https://github.com/chtipepere/woocommerceAtosPlugin/issues/6)
 * Fix some code styles

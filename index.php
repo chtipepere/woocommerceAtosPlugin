@@ -4,7 +4,7 @@
  * Text Domain: woocommerce-atos
  * Plugin URI: https://github.com/chtipepere/woocommerceAtosPlugin
  * Description: Extends Woocommerce with Atos SIPS gateway (French bank).
- * Version: 1.2.1
+ * Version: 1.2.2
  * Author: πR
  **/
 

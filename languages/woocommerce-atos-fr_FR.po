@@ -114,6 +114,10 @@ msgstr "Image apparaissant sur la droite de la page de votre banque"
 msgid "Center image on Atos page"
 msgstr "Image apparaissant au centre de la page de votre banque"
 
+#: index.php:226
+msgid "Left image on Atos page"
+msgstr "Image apparaissant sur la gauche de la page de votre banque"
+
 #: index.php:241
 msgid "Thank you for your order, please click the button below to pay."
 msgstr "Merci pour votre commande, merci de cliquer sur l'un des boutons ci-dessous."

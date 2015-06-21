@@ -65,4 +65,7 @@ Then your param files should be located in:
 ```
 /var/atos/param/ 
 ```
- 
+
+Good to know
+------------
+If you want to see the logo images on your bank page, then you'll have to validate your merchant-id and make your tests on a pre-production platform (see [this issue](https://github.com/chtipepere/woocommerceAtosPlugin/issues/4#issuecomment-112032699)).

@@ -2,7 +2,7 @@
 Contributors: chtipepere
 Tags: Woocommerce, Payment Gateway, Atos, Cartes Bancaires
 Requires at least: 4.0.1
-Tested up to: 4.0.1
+Tested up to: 4.4.2
 Stable tag: 1.2.3
 License: Apache License 2.0
 License URI: http://www.apache.org/licenses/LICENSE-2.0

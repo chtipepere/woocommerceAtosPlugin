@@ -104,8 +104,8 @@ function woocommerce_atos_init()
     {
         $mylinks = array(
             sprintf( '<a href="%s">%s</a>',
-                admin_url( 'admin.php?page=wc-settings&tab=checkout&section=woocommerce_atos',
-                    __( 'Settings', 'woocommerce-atos' ) ) ),
+                admin_url( 'admin.php?page=wc-settings&tab=checkout&section=woocommerce_atos'),
+                    __( 'Settings', 'woocommerce-atos' ) ),
             sprintf( '<a href="https://github.com/chtipepere/woocommerceAtosPlugin/blob/master/README.md">%s</a>',
                 __( 'Docs', 'woocommerce-atos' ) )
         );
